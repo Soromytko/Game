@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
+[ext_resource path="res://slot0_normal_roughness.packed_tex" type="Texture" id=3]
+[ext_resource path="res://slot0_albedo_bump.packed_tex" type="Texture" id=4]
+[ext_resource path="res://terrain/data.hterrain" type="Resource" id=5]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+mode = 0
+textures = [ [ ExtResource( 4 ) ], [ ExtResource( 3 ) ] ]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="HTerrain" type="Spatial" parent="."]
+script = ExtResource( 1 )
+lod_scale = 2.0
+_terrain_data = ExtResource( 5 )
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 1 )
+render_layers = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
+
+[node name="Player" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31155, 3.19368, 1.76362 )
+
+[node name="CSGSphere" type="CSGSphere" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0 )
+radius = 1.38789
+
+[node name="CameraController" type="Spatial" parent="."]
+transform = Transform( -0.843391, 0, -0.5373, 0, 1, 0, 0.5373, 0, -0.843391, 2.94179, 0, 0.977846 )
+
+[node name="Pivot" type="Spatial" parent="CameraController"]
+transform = Transform( 1, -1.49012e-08, 0, 0, 0.87885, 0.477097, 0, -0.477097, 0.87885, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="CameraController/Pivot"]
+transform = Transform( 1, 1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -2.98023e-08, 2.98023e-08, 5.96046e-08, 1, -1.19209e-07, 2.38419e-07, 10.2536 )
