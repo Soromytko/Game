@@ -1,16 +1,15 @@
 extends Spatial
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
-var sensitivity = 0.4
-var acceleration = 20
-var v_min = -75
-var v_max = +75
-var instant_mouse = Vector2(0, 0)
-var smoothed_mouse = Vector2(0, 0)
+export var sensitivity = 0.4
+export var acceleration = 20
+export var v_min = -75
+export var v_max = +75
+export var instant_mouse = Vector2(0, 0)
+export var smoothed_mouse = Vector2(0, 0)
 
 func follow(target):
 	pass
