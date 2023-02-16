@@ -3,6 +3,7 @@ extends Node
 #onready var camera = get_node("/root/Spatial/CameraController")
 
 signal move_event(position)
+var valicity = Vector3.DOWN
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,3 +16,6 @@ func _process(delta):
 	emit_signal("move_event", self.transform.origin)
 #	camera.follow(self)
 	pass
+	
+func _physics_rocess(delta):
+	move_and_slide()
