@@ -4,10 +4,17 @@ signal move_event(position)
 
 onready var camera = get_node("/root/Spatial/CameraController")
 
-export var move_speed = 10
+export var move_speed : float = 10
+export var rotation_speed : float = 10
+export var jump_force : float = 25
+export var gravity : float = 5
 
 var velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
+
+const G = 9.8
+
+
 
 func get_input() -> Vector3:
 	var input = Vector3.ZERO
@@ -20,14 +27,15 @@ func move(direction : Vector3):
 #	velocity.y = direction.y * 10
 	velocity.z = direction.z * move_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-func _process(delta):
-	pass
 	
+func jump():
+	if(is_on_floor()):
+		velocity.y += jump_force
+		
+func _input(event):
+	if Input.is_action_just_pressed("jump"):
+		jump()
+		
 func _physics_process(delta):
 	var input = get_input()
 	var direction = camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
@@ -37,13 +45,14 @@ func _physics_process(delta):
 
 	
 	if (input != Vector3.ZERO):
-		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), 10 * delta)
+		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), rotation_speed * delta)
 	
 #	print(rad2deg(direction.angle_to(Vector3.FORWARD)))
 #	rotation_degrees.y = rad2deg(direction.angle_to(Vector3.FORWARD))
 	
 #	direction = -transform.basis.z if input != Vector3.ZERO else Vector3.ZERO
-	velocity.y -= 1
+
+	velocity.y -= gravity * G * delta
 	move(direction)
 	emit_signal("move_event", self.transform.origin)
 	pass
