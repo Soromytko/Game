@@ -2,6 +2,8 @@ extends KinematicBody
 
 signal move_event(position)
 
+onready var camera = get_node("/root/Spatial/CameraController")
+
 export var move_speed = 10
 
 var velocity = Vector3.ZERO
@@ -28,8 +30,20 @@ func _process(delta):
 	
 func _physics_process(delta):
 	var input = get_input()
+	var direction = camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
+#	rotation_degrees.y = camera.rotation_degrees.y
+#	print(Quat(camera.global_transform.basis))
+
+
+	
+	if (input != Vector3.ZERO):
+		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), 10 * delta)
+	
+#	print(rad2deg(direction.angle_to(Vector3.FORWARD)))
+#	rotation_degrees.y = rad2deg(direction.angle_to(Vector3.FORWARD))
+	
+#	direction = -transform.basis.z if input != Vector3.ZERO else Vector3.ZERO
 	velocity.y -= 1
-	move(input)
-	print(is_on_floor())
+	move(direction)
 	emit_signal("move_event", self.transform.origin)
 	pass

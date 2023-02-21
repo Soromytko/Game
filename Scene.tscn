@@ -38,7 +38,7 @@ material/0 = SubResource( 6 )
 script = ExtResource( 2 )
 
 [node name="Player" type="KinematicBody" parent="."]
-transform = Transform( 0.494488, 0, 0.869184, 0, 1, 0, -0.869184, 0, 0.494488, 0, 5.44681, 0 )
+transform = Transform( 0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, 0, 5.44681, 0 )
 script = ExtResource( 1 )
 
 [node name="Skin" type="MeshInstance" parent="Player"]

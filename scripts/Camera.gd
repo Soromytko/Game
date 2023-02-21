@@ -41,4 +41,5 @@ func _physics_process(delta):
 	smoothed_mouse.x = lerp(smoothed_mouse.x, instant_mouse.x, speed)
 	smoothed_mouse.y = lerp(smoothed_mouse.y, instant_mouse.y, speed)
 	$Pivot.rotation_degrees.x = smoothed_mouse.y
-	$Pivot.rotation_degrees.y = smoothed_mouse.x
+#	$Pivot.rotation_degrees.y = smoothed_mouse.x
+	rotation_degrees.y = smoothed_mouse.x
