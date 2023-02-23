@@ -4,17 +4,17 @@ signal move_event(position)
 
 onready var camera = get_node("/root/Spatial/CameraController")
 
-export var move_speed : float = 10
+export var walk_speed : float = 10
+export var sprint_speed : float = 30
 export var rotation_speed : float = 10
 export var jump_force : float = 25
 export var gravity : float = 5
 
+var handle_speed = walk_speed
 var velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
 
 const G = 9.8
-
-
 
 func get_input() -> Vector3:
 	var input = Vector3.ZERO
@@ -23,9 +23,9 @@ func get_input() -> Vector3:
 	return input.normalized() if input.length() > 1 else input
 
 func move(direction : Vector3):
-	velocity.x = direction.x * move_speed
+	velocity.x = direction.x * handle_speed
 #	velocity.y = direction.y * 10
-	velocity.z = direction.z * move_speed
+	velocity.z = direction.z * handle_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
 	
 func jump():
@@ -35,6 +35,11 @@ func jump():
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
 		jump()
+	if Input.is_action_just_pressed("sprint"):
+		handle_speed = sprint_speed
+	elif Input.is_action_just_released("sprint"):
+		handle_speed = walk_speed
+		
 		
 func _physics_process(delta):
 	var input = get_input()
