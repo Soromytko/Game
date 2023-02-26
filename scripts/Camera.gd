@@ -21,7 +21,9 @@ func follow(target):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-#	$Pivot/Camera.add_exeption(get_parent())
+#	print(get_node("/root/Spatial/Connector").player)
+	var player = get_node("/root/Spatial/Player")
+	$Pivot.add_excluded_object(player)
 	pass # Replace with function body.
 
 

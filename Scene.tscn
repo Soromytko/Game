@@ -28,6 +28,16 @@ albedo_texture = ExtResource( 3 )
 
 [node name="Spatial" type="Spatial"]
 
+[node name="CameraController" type="Spatial" parent="."]
+script = ExtResource( 6 )
+
+[node name="Pivot" type="SpringArm" parent="CameraController"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.42534 )
+spring_length = 20.0
+
+[node name="Camera" type="Camera" parent="CameraController/Pivot"]
+transform = Transform( 1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -5.96046e-08, 2.98023e-08, 5.96046e-08, 1, 0, 1, 20 )
+
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 17.4803 )
 mesh = SubResource( 5 )
@@ -53,16 +63,6 @@ material/0 = SubResource( 8 )
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2, 0 )
 shape = SubResource( 2 )
-
-[node name="CameraController" type="Spatial" parent="."]
-transform = Transform( -0.843391, 0, -0.5373, 0, 1, 0, 0.5373, 0, -0.843391, 2.94179, 0, 0.977846 )
-script = ExtResource( 6 )
-
-[node name="Pivot" type="Spatial" parent="CameraController"]
-transform = Transform( 1, 0, 5.96046e-08, 0, 0.87885, 0.477097, -2.98023e-08, -0.477097, 0.87885, 0, 0, 0 )
-
-[node name="Camera" type="Camera" parent="CameraController/Pivot"]
-transform = Transform( 1, 1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -2.98023e-08, 2.98023e-08, 5.96046e-08, 1, 0, 0, 20 )
 
 [node name="Ground" type="MeshInstance" parent="."]
 transform = Transform( 100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0 )
