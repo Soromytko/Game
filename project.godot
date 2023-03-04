@@ -8,10 +8,44 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RigidBody",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://scripts/Equipment.gd"
+}, {
+"base": "Node",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://scripts/Inventory.gd"
+}, {
+"base": "Area",
+"class": "Picker",
+"language": "GDScript",
+"path": "res://scripts/Picker.gd"
+}, {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+}, {
+"base": "Node",
+"class": "TransformExtension",
+"language": "GDScript",
+"path": "res://scripts/TransformExtension.gd"
+} ]
+_global_script_class_icons={
+"Equipment": "",
+"Inventory": "",
+"Picker": "",
+"Player": "",
+"TransformExtension": ""
+}
+
 [application]
 
 config/name="Game"
-run/main_scene="res://Scene.tscn"
+run/main_scene="res://scenes/Scene.tscn"
 config/icon="res://icon.png"
 
 [gui]

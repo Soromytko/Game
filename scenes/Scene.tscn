@@ -1,0 +1,102 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://grass_lowpoly.png" type="Texture" id=1]
+[ext_resource path="res://scenes/prefabs/Axe.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Picker.gd" type="Script" id=4]
+[ext_resource path="res://scripts/Camera.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Connector.gd" type="Script" id=6]
+[ext_resource path="res://scripts/Inventory.gd" type="Script" id=7]
+
+[sub_resource type="CapsuleMesh" id=1]
+
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="CapsuleShape" id=2]
+
+[sub_resource type="BoxShape" id=9]
+
+[sub_resource type="CubeMesh" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="CylinderShape" id=12]
+
+[sub_resource type="CylinderMesh" id=13]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Connector" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="CameraController" type="Spatial" parent="."]
+script = ExtResource( 5 )
+
+[node name="Pivot" type="SpringArm" parent="CameraController"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+spring_length = 20.0
+
+[node name="Camera" type="Camera" parent="CameraController/Pivot"]
+transform = Transform( 1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -5.96046e-08, 2.98023e-08, 5.96046e-08, 1, 0, 1, 20 )
+
+[node name="Player" type="KinematicBody" parent="."]
+transform = Transform( 0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, 0, 5.44681, 0 )
+collision_layer = 2
+script = ExtResource( 3 )
+
+[node name="Skin" type="MeshInstance" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2, 0 )
+mesh = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Player/Skin"]
+transform = Transform( 0.5, 0, 0, 0, 0.297825, 1.91098e-09, 0, 8.49322e-10, 0.32697, 0, -0.772308, -0.858486 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2, 0 )
+shape = SubResource( 2 )
+
+[node name="Area" type="Area" parent="Player"]
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player/Area"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2, 0 )
+shape = SubResource( 2 )
+
+[node name="Inventory" type="Node" parent="Player"]
+script = ExtResource( 7 )
+
+[node name="Hand" type="Spatial" parent="Player"]
+transform = Transform( 0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, 1.19421, 2.63144, -0.556871 )
+
+[node name="Axe" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.694181, 0.7198, 0, -0.7198, 0.694181, -9.0303, 16.2766, 0.0527 )
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000270844, 0, -0.0391359 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, -0.000437975, 0.00803399, 0.0115547 )
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 11 )
+
+[node name="Axe2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.37008, 17.3815 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Axe2"]
+shape = SubResource( 12 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Axe2"]
+mesh = SubResource( 13 )
+
+[connection signal="area_entered" from="Player/Area" to="Player/Area" method="_on_Area_area_entered"]
+[connection signal="body_entered" from="Player/Area" to="Player/Area" method="_on_Area_body_entered"]
