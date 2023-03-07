@@ -71,6 +71,11 @@ script = ExtResource( 7 )
 [node name="Hand" type="Spatial" parent="Player"]
 transform = Transform( 0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, 1.19421, 2.63144, -0.556871 )
 
+[node name="RayCast" type="RayCast" parent="Player"]
+transform = Transform( 0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, 0, 2.866, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -5 )
+
 [node name="Axe" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.0303, 16.2766, 0.0527 )
 

@@ -17,6 +17,7 @@ var move_direction = Vector3.ZERO
 
 const G = 9.8
 
+
 func get_input() -> Vector3:
 	var input = Vector3.ZERO
 	input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -40,6 +41,11 @@ func _input(event):
 		handle_speed = sprint_speed
 	elif Input.is_action_just_released("sprint"):
 		handle_speed = walk_speed
+	if Input.is_action_just_pressed("Click"):
+		if $RayCast.is_colliding():
+			var collider = $RayCast.get_collider()
+			if collider is TreeWooden:
+				collider.queue_free()
 		
 		
 func _physics_process(delta):

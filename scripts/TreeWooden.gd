@@ -1,7 +1,5 @@
-class_name Equipment
-extends RigidBody
-
-export var b = false
+class_name TreeWooden
+extends Node
 
 
 # Declare member variables here. Examples:
@@ -17,12 +15,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-
-		
-func playA():
-	$AnimationPlayer.playback_speed = 2
-	$AnimationPlayer.play("Axe")
-
-func _process(delta):
-	if Input.is_action_just_pressed("Click"):
-		playA()

@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "TransformExtension",
 "language": "GDScript",
 "path": "res://scripts/TransformExtension.gd"
+}, {
+"base": "Reference",
+"class": "TreeWooden",
+"language": "GDScript",
+"path": "res://scripts/TreeWooden.gd"
 } ]
 _global_script_class_icons={
 "Equipment": "",
 "Inventory": "",
 "Picker": "",
 "Player": "",
-"TransformExtension": ""
+"TransformExtension": "",
+"TreeWooden": ""
 }
 
 [application]
