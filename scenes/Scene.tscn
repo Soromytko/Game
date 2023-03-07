@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://grass_lowpoly.png" type="Texture" id=1]
 [ext_resource path="res://scenes/prefabs/Axe.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://scripts/Connector.gd" type="Script" id=6]
 [ext_resource path="res://scripts/Inventory.gd" type="Script" id=7]
+[ext_resource path="res://scenes/prefabs/Tree.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -23,10 +24,6 @@ albedo_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=11]
 albedo_texture = ExtResource( 1 )
-
-[sub_resource type="CylinderShape" id=12]
-
-[sub_resource type="CylinderMesh" id=13]
 
 [node name="Spatial" type="Spatial"]
 
@@ -75,7 +72,7 @@ script = ExtResource( 7 )
 transform = Transform( 0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, 1.19421, 2.63144, -0.556871 )
 
 [node name="Axe" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 0.694181, 0.7198, 0, -0.7198, 0.694181, -9.0303, 16.2766, 0.0527 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.0303, 16.2766, 0.0527 )
 
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000270844, 0, -0.0391359 )
@@ -89,14 +86,8 @@ transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
 mesh = SubResource( 10 )
 material/0 = SubResource( 11 )
 
-[node name="Axe2" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.37008, 17.3815 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Axe2"]
-shape = SubResource( 12 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Axe2"]
-mesh = SubResource( 13 )
+[node name="Tree" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0743, 0, 7.52273 )
 
 [connection signal="area_entered" from="Player/Area" to="Player/Area" method="_on_Area_area_entered"]
 [connection signal="body_entered" from="Player/Area" to="Player/Area" method="_on_Area_body_entered"]

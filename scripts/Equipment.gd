@@ -18,7 +18,11 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _process(delta):
-	if b:
-		transform.origin = Vector3.ZERO
+		
+func playA():
+	$AnimationPlayer.playback_speed = 2
+	$AnimationPlayer.play("Axe")
 
+func _process(delta):
+	if Input.is_action_pressed("Click"):
+		playA()
