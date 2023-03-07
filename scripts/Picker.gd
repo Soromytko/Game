@@ -10,3 +10,5 @@ func _on_Area_body_entered(body):
 	if body is Equipment:
 		inventory.add_item(body)
 #		body.queue_free()
+	elif body is RigidBody:
+		body.queue_free()

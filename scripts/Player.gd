@@ -45,7 +45,7 @@ func _input(event):
 		if $RayCast.is_colliding():
 			var collider = $RayCast.get_collider()
 			if collider is TreeWooden:
-				collider.queue_free()
+				collider.destroy()
 		
 		
 func _physics_process(delta):

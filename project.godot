@@ -34,7 +34,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/TransformExtension.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "TreeWooden",
 "language": "GDScript",
 "path": "res://scripts/TreeWooden.gd"
