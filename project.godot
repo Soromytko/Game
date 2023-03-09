@@ -12,46 +12,70 @@ _global_script_classes=[ {
 "base": "RigidBody",
 "class": "Equipment",
 "language": "GDScript",
-"path": "res://scripts/Equipment.gd"
+"path": "res://Scripts/Equipment.gd"
+}, {
+"base": "Item",
+"class": "Foliage",
+"language": "GDScript",
+"path": "res://Scripts/Foliage.gd"
 }, {
 "base": "Node",
 "class": "Inventory",
 "language": "GDScript",
-"path": "res://scripts/Inventory.gd"
+"path": "res://Scripts/Inventory.gd"
+}, {
+"base": "Node",
+"class": "Item",
+"language": "GDScript",
+"path": "res://Scripts/Item.gd"
 }, {
 "base": "Area",
 "class": "Picker",
 "language": "GDScript",
-"path": "res://scripts/Picker.gd"
+"path": "res://Scripts/Picker.gd"
 }, {
 "base": "KinematicBody",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scripts/Player.gd"
+"path": "res://Scripts/Player.gd"
 }, {
 "base": "Node",
 "class": "TransformExtension",
 "language": "GDScript",
-"path": "res://scripts/TransformExtension.gd"
+"path": "res://Scripts/TransformExtension.gd"
 }, {
 "base": "Node",
 "class": "TreeWooden",
 "language": "GDScript",
-"path": "res://scripts/TreeWooden.gd"
+"path": "res://Scripts/WoodTree.gd"
+}, {
+"base": "Item",
+"class": "Wood",
+"language": "GDScript",
+"path": "res://Scripts/Wood.gd"
+}, {
+"base": "Node",
+"class": "WoodTree",
+"language": "GDScript",
+"path": "res://Scripts/TreeWooden.gd"
 } ]
 _global_script_class_icons={
 "Equipment": "",
+"Foliage": "",
 "Inventory": "",
+"Item": "",
 "Picker": "",
 "Player": "",
 "TransformExtension": "",
-"TreeWooden": ""
+"TreeWooden": "",
+"Wood": "",
+"WoodTree": ""
 }
 
 [application]
 
 config/name="Game"
-run/main_scene="res://scenes/Scene.tscn"
+run/main_scene="res://Scenes/Scene.tscn"
 config/icon="res://icon.png"
 
 [gui]
@@ -99,6 +123,11 @@ Click={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[layer_names]
+
+3d_physics/layer_2="Player"
+3d_physics/layer_3="Item"
 
 [physics]
 

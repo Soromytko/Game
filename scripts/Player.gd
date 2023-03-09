@@ -42,10 +42,11 @@ func _input(event):
 	elif Input.is_action_just_released("sprint"):
 		handle_speed = walk_speed
 	if Input.is_action_just_pressed("Click"):
-		if $RayCast.is_colliding():
-			var collider = $RayCast.get_collider()
-			if collider is TreeWooden:
-				collider.destroy()
+		if $Hand.get_child_count() > 0:
+			if $RayCast.is_colliding():
+				var collider = $RayCast.get_collider()
+				if collider is TreeWooden:
+					collider.destroy()
 		
 		
 func _physics_process(delta):

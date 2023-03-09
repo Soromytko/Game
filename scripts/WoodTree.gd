@@ -1,4 +1,4 @@
-class_name WoodTree
+class_name TreeWooden
 extends Node
 
 var wood_scene = preload("res://Prefabs/Wood.tscn")
