@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
+
+[node name="CameraController" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Pivot" type="SpringArm" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+spring_length = 20.0
+
+[node name="Camera" type="Camera" parent="Pivot"]
+transform = Transform( 1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -5.96046e-08, 2.98023e-08, 5.96046e-08, 1, 0, 1, 20 )
