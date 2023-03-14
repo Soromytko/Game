@@ -30,6 +30,10 @@ func set_parent2(parent, child):
 	parent.add_child(child)
 	
 	
+func remove_wood(count):
+	wood_count -= count
+	emit_signal("wood_count_changed", wood_count)
+	
 func add_item0(item : Item):
 	items.append(item)
 	if item is Wood:

@@ -30,6 +30,14 @@ func move(direction : Vector3):
 	velocity.z = direction.z * handle_speed
 	velocity = move_and_slide(velocity, Vector3.UP)
 	
+var is_build_mode = false
+func set_build_mode(active):
+	var axe_cur = $Hand.get_node("Axe")
+	if axe_cur != null:
+		axe_cur.visible = !active
+	is_build_mode = active
+	pass
+	
 func jump():
 	if(is_on_floor()):
 		velocity.y += jump_force
@@ -41,7 +49,7 @@ func _input(event):
 		handle_speed = sprint_speed
 	elif Input.is_action_just_released("sprint"):
 		handle_speed = walk_speed
-	if Input.is_action_just_pressed("Click"):
+	if Input.is_action_just_pressed("Click") and not is_build_mode:
 		if $Hand.get_child_count() > 0:
 			if $RayCast.is_colliding():
 				var collider = $RayCast.get_collider()
