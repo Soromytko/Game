@@ -14,7 +14,7 @@ export var gravity : float = 5
 var handle_speed = walk_speed
 var velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
-
+var stamina_bar_value : float = 1
 const G = 9.8
 
 
@@ -45,10 +45,6 @@ func jump():
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
 		jump()
-	if Input.is_action_just_pressed("sprint"):
-		handle_speed = sprint_speed
-	elif Input.is_action_just_released("sprint"):
-		handle_speed = walk_speed
 	if Input.is_action_just_pressed("Click") and not is_build_mode:
 		if $Hand.get_child_count() > 0:
 			if $RayCast.is_colliding():
@@ -56,7 +52,24 @@ func _input(event):
 				if collider is TreeWooden:
 					collider.destroy()
 		
+var a : float = 1	
 		
+func _process(delta):
+	var stamina = get_node("/root/Spatial/Control/Stamina/Bar")
+	
+	if Input.is_action_pressed("sprint"):
+		stamina_bar_value = move_toward(stamina_bar_value, 0, delta / 2)
+		if stamina_bar_value > 0:
+			handle_speed = sprint_speed
+		else:
+			handle_speed = walk_speed
+	else:
+		stamina_bar_value = move_toward(stamina_bar_value, 1, delta / 5)
+	if Input.is_action_just_released("sprint"):
+		handle_speed = walk_speed
+		
+	stamina.rect_scale.x = stamina_bar_value
+
 func _physics_process(delta):
 	var input = get_input()
 	var direction = camera.transform.basis.x * input.x + camera.transform.basis.z * input.z

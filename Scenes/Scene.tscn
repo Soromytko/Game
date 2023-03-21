@@ -42,30 +42,60 @@ color = Color( 0.321569, 0.309804, 0.309804, 0.470588 )
 
 [node name="Foliage" type="TextureRect" parent="Control"]
 margin_left = 4.0
-margin_top = 3.0
+margin_top = 46.0
 margin_right = 844.0
-margin_bottom = 575.0
+margin_bottom = 618.0
 rect_scale = Vector2( 0.06, 0.06 )
 texture = ExtResource( 5 )
 
 [node name="Wood" type="TextureRect" parent="Control"]
 margin_left = 1.0
-margin_top = 29.0
+margin_top = 72.0
 margin_right = 513.0
-margin_bottom = 541.0
+margin_bottom = 584.0
 rect_scale = Vector2( 0.08, 0.08 )
 texture = ExtResource( 7 )
 
 [node name="LeafCount" type="Label" parent="Control"]
 margin_left = 50.0
-margin_top = 7.0
+margin_top = 50.0
 margin_right = 90.0
-margin_bottom = 21.0
+margin_bottom = 64.0
 text = "0"
 
 [node name="WoodCount" type="Label" parent="Control"]
 margin_left = 50.0
-margin_top = 42.0
+margin_top = 85.0
 margin_right = 90.0
-margin_bottom = 56.0
+margin_bottom = 99.0
 text = "0"
+
+[node name="Health" type="ColorRect" parent="Control"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 208.0
+margin_bottom = 18.0
+rect_pivot_offset = Vector2( 100, 5 )
+
+[node name="Bar" type="ColorRect" parent="Control/Health"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 199.0
+margin_bottom = 9.0
+rect_pivot_offset = Vector2( 0, 4 )
+color = Color( 1, 0.223529, 0.223529, 1 )
+
+[node name="Stamina" type="ColorRect" parent="Control"]
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 208.0
+margin_bottom = 34.0
+rect_pivot_offset = Vector2( 100, 5 )
+
+[node name="Bar" type="ColorRect" parent="Control/Stamina"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 199.0
+margin_bottom = 9.0
+rect_pivot_offset = Vector2( 0, 4 )
+color = Color( 1, 0.913725, 0.223529, 1 )
