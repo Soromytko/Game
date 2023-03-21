@@ -6,44 +6,86 @@ onready var player = get_node("/root/Spatial/Player")
 onready var inventory = get_node("/root/Spatial/Player/Inventory")
 
 var wall_scene = preload("res://Prefabs/Wall.tscn")
+var roof_scene = preload("res://Prefabs/Roof.tscn")
 
 var is_build_mode = false
 var wall_instance
+var roof_instance
+var brash #wall/roof
 
 func _ready():
 	wall_instance = wall_scene.instance()
 	get_node("/root/Spatial").call_deferred("add_child", wall_instance)
 	wall_instance.visible = false
-	wall_instance.get_node("CollisionShape").disabled = true
-	wall_instance.get_node("CollisionShape2").disabled = true
-	wall_instance.get_node("CollisionShape3").disabled = true
-	wall_instance.get_node("CollisionShape4").disabled = true
-	wall_instance.get_node("CollisionShape5").disabled = true
+	for child in wall_instance.get_children():
+		if child is CollisionShape:
+			child.disabled = true
+	
+	roof_instance = roof_scene.instance()
+	get_node("/root/Spatial").call_deferred("add_child", roof_instance)
+	roof_instance.visible = false
+	for child in roof_instance.get_children():
+		if child is CollisionShape:
+			child.disabled = true
+	
+	brash = wall_instance
+	
 	
 func _input(event):
 	if event is InputEventKey:
-		if event.scancode == KEY_1:
-			is_build_mode = false
-			print("build mode is disable")
-			player.set_build_mode(false)
-		elif event.scancode == KEY_2:
-			print("build mode is enabled")
-			is_build_mode = true
-			player.set_build_mode(true)
+		match event.scancode:
+			KEY_1:
+				is_build_mode = false
+				print("build mode is disable")
+				player.set_build_mode(false)
+			KEY_2:
+				print("build mode is enabled")
+				is_build_mode = true
+				player.set_build_mode(true)
+			KEY_R:
+				brash.visible = false
+				brash = roof_instance
+			KEY_T:
+				brash.visible = false
+				brash = wall_instance
+				
+
+
+func _build():
+	var construction
+	if brash == wall_instance:
+		construction = wall_scene.instance()
+	elif brash == roof_instance:
+		construction = roof_scene.instance()
+		
+	remove()
+	get_node("/root/Spatial").add_child(construction)
+	construction.transform.origin = brash.transform.origin
+	construction.rotation_degrees = brash.rotation_degrees
+	
+	
+func get_count():
+	if brash == wall_instance: return inventory.wood_count
+	elif brash == roof_instance: return inventory.foliage_count
+	return 0
+
+func remove():
+	if brash == wall_instance: inventory.remove_wood(2)
+	elif brash == roof_instance: inventory.remove_foliage(2)
 
 func _physics_process(delta):
-	wall_instance.visible = false
-	if is_build_mode == false: return
-	if inventory.wood_count < 2: return
+	brash.visible = false
+	if is_build_mode == false || get_count() < 2: return
 
 	if is_colliding():
 		var collider = get_collider()
-		wall_instance.transform.origin = get_collision_point()
-		wall_instance.rotation_degrees = get_parent().get_parent().get_parent().rotation_degrees
-		wall_instance.visible = true
+		brash.transform.origin = get_collision_point()
+		brash.rotation_degrees = get_parent().get_parent().get_parent().rotation_degrees
+		brash.visible = true
 		if Input.is_action_just_pressed("Click"):
-			inventory.remove_wood(2)
-			var wall = wall_scene.instance()
-			get_node("/root/Spatial").add_child(wall)
-			wall.transform.origin = wall_instance.transform.origin
-			wall.rotation_degrees = wall_instance.rotation_degrees
+			_build()
+#			inventory.remove_wood(2)
+#			var wall = wall_scene.instance()
+#			get_node("/root/Spatial").add_child(wall)
+#			wall.transform.origin = brash.transform.origin
+#			wall.rotation_degrees = brash.rotation_degrees
