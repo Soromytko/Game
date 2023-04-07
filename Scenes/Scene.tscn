@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Prefabs/Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Axe.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://WoodIcon.png" type="Texture" id=7]
 [ext_resource path="res://Prefabs/Tree.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/TreesGenerator.gd" type="Script" id=9]
+[ext_resource path="res://Prefabs/Boar.tscn" type="PackedScene" id=10]
 
 [node name="Spatial" type="Spatial"]
 
@@ -99,3 +100,6 @@ margin_right = 199.0
 margin_bottom = 9.0
 rect_pivot_offset = Vector2( 0, 4 )
 color = Color( 1, 0.913725, 0.223529, 1 )
+
+[node name="Boar" parent="." instance=ExtResource( 10 )]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -0.049159, 0.87337, 13.6198 )
