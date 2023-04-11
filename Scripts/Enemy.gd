@@ -34,6 +34,7 @@ func move_to(target : Vector3):
 	
 
 func _ready():
+	nav_agent.set_navigation(get_node("/root/Spatial/Navigation"))
 	move_to(global_transform.origin)
 	
 
@@ -118,14 +119,14 @@ func pursue(delta):
 		_set_state(State.WALK)
 
 
-var looking_time : float = 3
+var looking_time : float = 5
 func look_around(delta):
 	animation_player.playback_speed = 2
 	animation_player.play("EnemyIdle")
 #	if animation_player.
 
 	if looking_time <= 0:
-		looking_time = 3
+		looking_time = 5
 		_set_state(State.WALK)
 		return
 	else:

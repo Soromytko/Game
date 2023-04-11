@@ -47,6 +47,8 @@ func jump():
 	if(is_on_floor()):
 		velocity.y += jump_force
 		
+		
+onready var e = get_node("/root/Spatial/Enemy").get_script()
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
 		jump()
@@ -56,6 +58,8 @@ func _input(event):
 				var collider = $RayCast.get_collider()
 				if collider is TreeWooden:
 					collider.destroy()
+				elif collider is e:
+					collider.queue_free()
 		
 var a : float = 1	
 		
