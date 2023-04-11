@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Picker.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Inventory.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=9]
+flags_transparent = true
 
 [sub_resource type="CubeMesh" id=7]
 
@@ -21,6 +24,7 @@ script = ExtResource( 1 )
 [node name="Skin" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2, 0 )
 mesh = SubResource( 1 )
+material/0 = SubResource( 9 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Skin"]
 transform = Transform( 0.5, 0, 0, 0, 0.297825, 1.91098e-09, 0, 8.49322e-10, 0.32697, 0, -0.772308, -0.858486 )

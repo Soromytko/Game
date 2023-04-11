@@ -17,6 +17,11 @@ var move_direction = Vector3.ZERO
 var stamina_bar_value : float = 1
 const G = 9.8
 
+func take_damage(damage : int):
+	var health = get_node("/root/Spatial/Control/Health/Bar")
+	health.rect_scale.x -= damage * 0.01
+	clamp(health.rect_scale.x, 0, 100)
+	
 
 func get_input() -> Vector3:
 	var input = Vector3.ZERO

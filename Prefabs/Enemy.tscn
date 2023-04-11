@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 
@@ -16,7 +16,63 @@ albedo_color = Color( 0.129412, 0.258824, 0.862745, 1 )
 
 [sub_resource type="SphereShape" id=6]
 
+[sub_resource type="Animation" id=7]
+resource_name = "EnemyIdle"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 3, 5, 7, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 90, 0, 0 ), Vector3( 90, -35.834, 0 ), Vector3( 90, -35.834, 0 ), Vector3( 90, 35.834, 0 ), Vector3( 90, 35.834, 0 ), Vector3( 90, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "EnemyWalk"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 90, 0, 0 ), Vector3( 90, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 90, 0, 0 ) ]
+}
+
+[sub_resource type="CubeMesh" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.105882, 0.305882, 0.886275, 1 )
+
+[sub_resource type="SphereShape" id=12]
+
 [node name="Enemy" type="KinematicBody"]
+collision_layer = 9
+collision_mask = 9
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -28,9 +84,10 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1.5, 0, 1, -6.55671e-08, 0, 2,
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 3.08345, 0.695352 )
+[node name="MeshInstance2" type="MeshInstance" parent="MeshInstance"]
+transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.333333, -1.45705e-08, 0, 0.695352, -0.7223 )
 mesh = SubResource( 4 )
+skeleton = NodePath("../..")
 material/0 = SubResource( 5 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
@@ -43,5 +100,35 @@ collision_mask = 7
 transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0 )
 shape = SubResource( 6 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/EnemyIdle = SubResource( 7 )
+anims/EnemyWalk = SubResource( 9 )
+anims/RESET = SubResource( 8 )
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -100 )
+collision_mask = 7
+
+[node name="MeshInstance" type="MeshInstance" parent="RayCast"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 5, 0, 0, 0 )
+visible = false
+mesh = SubResource( 10 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="RayCast"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, -3.116 )
+visible = false
+mesh = SubResource( 10 )
+skeleton = NodePath("../MeshInstance")
+material/0 = SubResource( 11 )
+
+[node name="Area2" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area2"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 12 )
+
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
+[connection signal="body_entered" from="Area2" to="." method="_on_Area2_body_entered"]

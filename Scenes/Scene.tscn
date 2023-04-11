@@ -32,13 +32,14 @@ script = ExtResource( 9 )
 
 [node name="Boar" parent="." instance=ExtResource( 10 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, -0.049159, 0.87337, 13.6198 )
+visible = false
 
 [node name="Navigation" type="Navigation" parent="."]
 
 [node name="Terrain" parent="Navigation" instance=ExtResource( 11 )]
 
 [node name="Enemy" parent="Navigation" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.569, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8225, 0, -6.31197 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 40.0
