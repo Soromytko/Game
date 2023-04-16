@@ -41,7 +41,7 @@ func _get_1d_from_2d(i, j, i_size, j_size):
 	return -1 if i >= i_size || j >= j_size  else i * i_size + j
 
 
-func _diamond(vertices, x, z, size):
+func _squre(vertices, x, z, size):
 	var rng = RandomNumberGenerator.new()
 	rng.speed = hash(OS.get_datetime())
 	
@@ -60,17 +60,18 @@ func _diamond(vertices, x, z, size):
 	
 	
 	
-func _squre(vertices, x, z, size):
+func _diamond(vertices, x, z, size):
 	var rng = RandomNumberGenerator.new()
 	rng.speed = hash(OS.get_datetime())
+	
+	var x_s = vertices.size() / 2
+	var z_s = vertices.size() / 2
 	
 	var v0 = vertices[_get_1d_from_2d(x - size, z - size, x_s, z_s)]
 	var v1 = vertices[_get_1d_from_2d(x + size, z - size, x_s, z_s)]
 	var v2 = vertices[_get_1d_from_2d(x - size, z + size, x_s, z_s)]
 	var v3 = vertices[_get_1d_from_2d(x + size, z + size, x_s, z_s)]
 	
-	var x_s = vertices.size() / 2
-	var z_s = vertices.size() / 2
 	
 	var o = (v0 + v1 + v2 + v3) / 4.0 + rng.randf_range(-2, 2)
 	
