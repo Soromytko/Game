@@ -1,10 +1,15 @@
 extends Spatial
 tool
 
+#var _ = preload("res://Scripts/DiamondSquare.gd")
+
 export(bool) var generate setget generate
 export var width : int = 16
 export var depth : int = 16
 export var smoothing : float = 1
+export var roughness : float = 0.1
+export var is_random_seed = false
+export var default_seed : String = "Something"
 
 var mesh_instance
 
@@ -40,101 +45,6 @@ func build_mesh(vertices, indices):
 func _get_1d_from_2d(i, j, i_size, j_size):
 	return -1 if i >= i_size || j >= j_size  else i * i_size + j
 
-
-func _squre(vertices, x, z, size):
-	var rng = RandomNumberGenerator.new()
-	rng.speed = hash(OS.get_datetime())
-	
-	var v0 = rng.randf_range(-2, 2)
-	var v1 = rng.randf_range(-2, 2)
-	var v2 = rng.randf_range(-2, 2)
-	var v3 = rng.randf_range(-2, 2)
-	
-	var x_s = vertices.size() / 2
-	var z_s = vertices.size() / 2
-	
-	vertices[_get_1d_from_2d(x - size, z, x_s, z_s)] = v0
-	vertices[_get_1d_from_2d(x + size, z, x_s, z_s)] = v1
-	vertices[_get_1d_from_2d(x, z - size, x_s, z_s)] = v2
-	vertices[_get_1d_from_2d(x, z + size, x_s, z_s)] = v3
-	
-	
-	
-func _diamond(vertices, x, z, size):
-	var rng = RandomNumberGenerator.new()
-	rng.speed = hash(OS.get_datetime())
-	
-	var x_s = vertices.size() / 2
-	var z_s = vertices.size() / 2
-	
-	var v0 = vertices[_get_1d_from_2d(x - size, z - size, x_s, z_s)]
-	var v1 = vertices[_get_1d_from_2d(x + size, z - size, x_s, z_s)]
-	var v2 = vertices[_get_1d_from_2d(x - size, z + size, x_s, z_s)]
-	var v3 = vertices[_get_1d_from_2d(x + size, z + size, x_s, z_s)]
-	
-	
-	var o = (v0 + v1 + v2 + v3) / 4.0 + rng.randf_range(-2, 2)
-	
-	vertices[_get_1d_from_2d(x, y, x_s, z_s)] = 0
-	
-	
-func _core(vertices, x, z, x_size, z_size):
-	
-	_squre(vertices, x, z, x_size)
-	_diamond(vertices, x, z, x_size)
-	
-	var x_new_size = x_size / 2
-	var z_new_size = z_size / 2
-	
-	if x_new_size
-	
-	
-	_core(vertices, x - x_new_size / 2, z - z_new_size, x_new_size, z_new_size)
-	_core(vertices, x + x_new_size / 2, z - z_new_size, x_new_size, z_new_size)
-	_core(vertices, x - x_new_size / 2, z + z_new_size, x_new_size, z_new_size)
-	_core(vertices, x + x_new_size / 2, z + z_new_size, x_new_size, z_new_size)
-	
-
-
-func _start_diamond_square(vertices, x_size, y_size):
-	var rng = RandomNumberGenerator.new()
-	rng.speed = hash(OS.get_datetime())
-	
-	var v0 = rng.randf_range(-2, 2)
-	var v1 = rng.randf_range(-2, 2)
-	var v2 = rng.randf_range(-2, 2)
-	var v3 = rng.randf_range(-2, 2)
-	
-	var x_s = vertices.size() / 2
-	var z_s = vertices.size() / 2
-	
-	vertices[_get_1d_from_2d(x - size, z - size, x_s, z_s)] = v0
-	vertices[_get_1d_from_2d(x + size, z - size, x_s, z_s)] = v1
-	vertices[_get_1d_from_2d(x - size, z + size, x_s, z_s)] = v2
-	vertices[_get_1d_from_2d(x + size, z + size, x_s, z_s)] = v3
-	
-	
-	
-	
-	pass
-	
-
-func _squre(vertices, x, z, x_size, z_size):
-	var rng = RandomNumberGenerator.new()
-	rng.speed = hash(OS.get_datetime())
-	
-	var oo = rng.randf_range(-2, 2)
-	var xo = rng.randf_range(-2, 2)
-	var oz = rng.randf_range(-2, 2)
-	var xz = rng.randf_range(-2, 2)
-	
-	var o = (oo + xo + oz + xz) / 4.0 + rng.randf_range(-2, 2)
-	
-	
-	vertices[x * width + z].y = rng.randf_range(-2, 2)
-	vertices[(x + x_size) * width + z].y = rng.randf_range(-2, 2)
-	vertices[x * width + z + z_size].y = rng.randf_range(-2, 2)
-	vertices[(x + x_size) * width + z + z_size].y = rng.randf_range(-2, 2)
 	
 
 func _generate_heightmap(x_count : int, z_count : int, step : float):
@@ -147,22 +57,36 @@ func _generate_heightmap(x_count : int, z_count : int, step : float):
 	
 	rng.seed = hash(OS.get_datetime())
 		
-#	for x in x_count:
-#		for z in z_count:
-#			var height = rng.randf_range(0, 1)
-##			height = 0
-#			result[x * x_count + z] = Vector3(x * step, height, z * step)
+	for x in x_count:
+		for z in z_count:
+			var height = rng.randf_range(0, 1)
+#			height = 0
+			result[x * x_count + z] = Vector3(x * step, height, z * step)
 
 			
 	return result
 	
 	
 func _generate():
-	var width_s = width * smoothing
-	var depth_s = depth * smoothing
+	var width_s = pow(2, smoothing) + 1
+	var depth_s = pow(2, smoothing) + 1
 	
-	var vertices = _generate_heightmap(width_s, depth_s, 1.0 / smoothing)
+	var heightmapGenerator = DiamondSquare.new()
+	default_seed = str(OS.get_time()) if is_random_seed else "Something"
+	var heights = heightmapGenerator.generate(Vector2(width_s, depth_s), roughness, hash(default_seed))
 	
+#	var vertices = _generate_heightmap(width_s, depth_s, 1)
+
+	var vertices = []
+	vertices.resize(width_s * depth_s)
+
+	for x in width_s:
+		for z in depth_s:
+			var index : int  = _get_1d_from_2d(x, z, width_s, depth_s)
+			vertices[index] = Vector3(x / width_s * width, heights[x][z], z / depth_s * depth)
+
+	width_s -= 1
+	depth_s -= 1
 	var indices = []
 	indices.resize(width_s * depth_s * 6)
 	
@@ -180,7 +104,7 @@ func _generate():
 			vert += 1
 			ind += 6
 		vert += 1
-			
+	
 	build_mesh(vertices, indices)
 
 
