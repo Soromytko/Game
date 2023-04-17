@@ -51,11 +51,13 @@ func _iterate(data, depth : int, rng : RandomNumberGenerator):
 	if half.x == 0: half.x = 1
 	if half.y == 0: half.y = 1
 	
+	var d = 1
+	
 #	print("diamond")
 	for x in range(half.x, data.size(), size.x):
 		for y in range(half.y, data[x].size(), size.y):
 #			print("x = ", x, " y = ", y)
-			var deviation = rng.randf_range(-2, 2) * size.length() * _roughness
+			var deviation = rng.randf_range(-d, d) * size.length() * _roughness
 			_diamond(data, x, y, half, deviation)
 			
 			
@@ -64,7 +66,7 @@ func _iterate(data, depth : int, rng : RandomNumberGenerator):
 #		print("x = ", x, " half.x = ", half.x, " size.x = ", size.x)
 		for y in range((x + half.x as int) % (size.x as int), data[x].size(), size.y):
 #			print("x = ", x, " y = ", y)
-			var deviation = rng.randf_range(-2, 2) * size.length() * _roughness
+			var deviation = rng.randf_range(-d, d) * size.length() * _roughness
 			_square(data, x, y, half, deviation)
 			
 	return _iterate(data, depth + 1, rng)

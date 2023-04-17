@@ -12,9 +12,11 @@ export var is_random_seed = false
 export var default_seed : String = "Something"
 
 var mesh_instance
+var water_mesh_instance
 
 func generate(__):
 	mesh_instance = $MeshInstance
+	water_mesh_instance = $MeshInstance/MeshInstance
 	_generate()
 
 
@@ -84,6 +86,11 @@ func _generate():
 		for z in depth_s:
 			var index : int  = _get_1d_from_2d(x, z, width_s, depth_s)
 			vertices[index] = Vector3(x / width_s * width, heights[x][z], z / depth_s * depth)
+			
+			
+#	var noise = OpenSimplexNoise.new()
+#	for i in vertices.size():
+#		vertices[i].y = noise.get_noise_2d(vertices[i].x, vertices[i].z) * 32
 
 	width_s -= 1
 	depth_s -= 1
@@ -106,6 +113,12 @@ func _generate():
 		vert += 1
 	
 	build_mesh(vertices, indices)
+	
+	
+	water_mesh_instance.global_transform.origin = Vector3(width / 2, 0, depth / 2)
+#	water_mesh_instance.global_transform.basis = (Vector3(width, 1, depth))
+	water_mesh_instance.scale = Vector3(width / 2, 1, depth / 2)
+#	water_mesh_instance.global_transform.basis = water_mesh_instance.global_transform.basis.orthonormalized() * new_scale
 
 
 #func _process(delta):
