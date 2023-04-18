@@ -9,6 +9,7 @@ export var depth : int = 16
 export var smoothing : float = 1
 export var roughness : float = 0.1
 export var is_random_seed = false
+export var height = 2
 export var default_seed : String = "Something"
 
 var mesh_instance
@@ -74,7 +75,9 @@ func _generate():
 	var depth_s = pow(2, smoothing) + 1
 	
 	var heightmapGenerator = DiamondSquare.new()
-	default_seed = str(OS.get_time()) if is_random_seed else "Something"
+#	default_seed = str(OS.get_time()) if is_random_seed else "Something"
+#111fgsdf
+	if is_random_seed: default_seed = str(OS.get_time())
 	var heights = heightmapGenerator.generate(Vector2(width_s, depth_s), roughness, hash(default_seed))
 	
 #	var vertices = _generate_heightmap(width_s, depth_s, 1)
@@ -85,7 +88,7 @@ func _generate():
 	for x in width_s:
 		for z in depth_s:
 			var index : int  = _get_1d_from_2d(x, z, width_s, depth_s)
-			vertices[index] = Vector3(x / width_s * width, heights[x][z], z / depth_s * depth)
+			vertices[index] = Vector3(x / width_s * width, heights[x][z] * height, z / depth_s * depth)
 			
 			
 #	var noise = OpenSimplexNoise.new()
@@ -116,9 +119,7 @@ func _generate():
 	
 	
 	water_mesh_instance.global_transform.origin = Vector3(width / 2, 0, depth / 2)
-#	water_mesh_instance.global_transform.basis = (Vector3(width, 1, depth))
 	water_mesh_instance.scale = Vector3(width / 2, 1, depth / 2)
-#	water_mesh_instance.global_transform.basis = water_mesh_instance.global_transform.basis.orthonormalized() * new_scale
 
 
 #func _process(delta):

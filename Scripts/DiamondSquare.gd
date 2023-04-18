@@ -2,6 +2,8 @@ class_name DiamondSquare
 
 var _roughness = 0.1
 var _seed = 0
+var _max = -10000
+var _min = 10000
 
 func generate(size : Vector2, roughness : float, seed_value : int):
 	_roughness = roughness
@@ -18,7 +20,16 @@ func generate(size : Vector2, roughness : float, seed_value : int):
 	rng.seed = _seed
 	result = _initialize(result, rng)
 	result = _iterate(result, 0, rng)
+	result = _subdivide(result)
 	
+	for i in range(0, result.size()):
+		for j in range(result[i].size(), result.size()):
+			if result[i][j] < 0: print(result[i][j])
+			result[i][j] = (result[i][j]) * (_max - _min) + _min
+#			result[i][j] *= 20
+	result = _subdivide(result)
+	
+			
 	return result
 	
 	
@@ -59,6 +70,8 @@ func _iterate(data, depth : int, rng : RandomNumberGenerator):
 #			print("x = ", x, " y = ", y)
 			var deviation = rng.randf_range(-d, d) * size.length() * _roughness
 			_diamond(data, x, y, half, deviation)
+			if data[x][y] < _min: _min = data[x][y]
+			if data[x][y] > _max: _max = data[x][y]
 			
 			
 #	print("square")
@@ -68,6 +81,8 @@ func _iterate(data, depth : int, rng : RandomNumberGenerator):
 #			print("x = ", x, " y = ", y)
 			var deviation = rng.randf_range(-d, d) * size.length() * _roughness
 			_square(data, x, y, half, deviation)
+			if data[x][y] < _min: _min = data[x][y]
+			if data[x][y] > _max: _max = data[x][y]
 			
 	return _iterate(data, depth + 1, rng)
 	
@@ -79,6 +94,7 @@ func _diamond(data, x : int, y : int, size, deviation : float):
 	var v3 = data[x + size.x][y - size.y]
 	
 	data[x][y] = (v0 + v1 + v2 + v3) / 4.0 + deviation
+#	data[x][y] = (v0 + v1 + v2 + v3) / 4.0
 	
 	
 func _square(data, x : int, y : int, size : Vector2, deviation : float):
@@ -88,5 +104,24 @@ func _square(data, x : int, y : int, size : Vector2, deviation : float):
 	var v3 = 0 if y + size.y >= data[x].size() else data[x][y + size.y]
 	
 	data[x][y] = (v0 + v1 + v2 + v3) / 4.0 + deviation
+#	data[x][y] = (v0 + v1 + v2 + v3) / 4.0
+	
+	
+func _subdivide(data):
+	for i in data.size():
+		for j in data[i].size():
+			var a = 0 if i - 1 < 0 || j - 1 < 0 else data[i - 1][j - 1]
+			var b = 0 if i - 1 < 0 || j + 1 >= data[i].size() else data[i - 1][j + 1]
+			var c = 0 if i + 1 >= data.size() || j + 1 >= data[i].size() else data[i + 1][j + 1]
+			var d = 0 if i + 1 >= data.size() || j - 1 < 0 else data[i + 1][j - 1]
+			
+			var e = 0 if i - 1 < 0 else data[i - 1][j]
+			var f = 0 if j - 1 < 0 else data[i][j - 1]
+			var g = 0 if i + 1 >= data.size() else data[i + 1][j]
+			var h = 0 if j + 1 >= data[i].size() else data[i][j + 1]
+			
+			data[i][j] = (a + b + c + d + e + f + g + h) / 8.0
+	
+	return data
 	
 	
