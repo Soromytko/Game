@@ -10,6 +10,7 @@ export var smoothing : float = 1
 export var roughness : float = 0.1
 export var is_random_seed = false
 export var height = 2
+export var sea_level = 10
 export var default_seed : String = "Something"
 
 var mesh_instance
@@ -118,8 +119,11 @@ func _generate():
 	build_mesh(vertices, indices)
 	
 	
-	water_mesh_instance.global_transform.origin = Vector3(width / 2, 0, depth / 2)
+	water_mesh_instance.global_transform.origin = Vector3(width / 2, sea_level, depth / 2)
 	water_mesh_instance.scale = Vector3(width / 2, 1, depth / 2)
+	
+	var textureRect = $"Control/TextureRect"
+	textureRect.update_with_heights(heights)
 
 
 #func _process(delta):
