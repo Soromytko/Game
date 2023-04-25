@@ -13,6 +13,7 @@ spring_length = 20.0
 
 [node name="Camera" type="Camera" parent="Pivot"]
 transform = Transform( 1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -5.96046e-08, 2.98023e-08, 5.96046e-08, 1, 0, 1, 20 )
+far = 500.0
 
 [node name="RayCast" type="RayCast" parent="Pivot/Camera"]
 transform = Transform( 1, -2.75286e-21, 0, -2.75286e-21, 1, 0, 0, 0, 1, 0, 3, 0 )

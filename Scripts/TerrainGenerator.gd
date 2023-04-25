@@ -16,6 +16,8 @@ export var default_seed : String = "Something"
 var mesh_instance
 var water_mesh_instance
 
+var vertx = []
+
 func generate(__):
 	mesh_instance = $MeshInstance
 	water_mesh_instance = $MeshInstance/MeshInstance
@@ -44,6 +46,9 @@ func build_mesh(vertices, indices):
 	mesh_instance.mesh = surface_tool.commit()
 	
 	print("mesh is built")
+	
+	$CollisionShape.shape = array_mesh.create_trimesh_shape()
+	
 
 
 func _get_1d_from_2d(i, j, i_size, j_size):
@@ -80,7 +85,6 @@ func _generate():
 #111fgsdf
 	if is_random_seed: default_seed = str(OS.get_time())
 	var heights = heightmapGenerator.generate(Vector2(width_s, depth_s), roughness, hash(default_seed))
-	
 #	var vertices = _generate_heightmap(width_s, depth_s, 1)
 
 	var vertices = []
@@ -91,7 +95,7 @@ func _generate():
 			var index : int  = _get_1d_from_2d(x, z, width_s, depth_s)
 			vertices[index] = Vector3(x / width_s * width, heights[x][z] * height, z / depth_s * depth)
 			
-			
+	vertx = vertices		
 #	var noise = OpenSimplexNoise.new()
 #	for i in vertices.size():
 #		vertices[i].y = noise.get_noise_2d(vertices[i].x, vertices[i].z) * 32

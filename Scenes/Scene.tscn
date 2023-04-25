@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Prefabs/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Axe.tscn" type="PackedScene" id=2]
@@ -11,6 +11,47 @@
 [ext_resource path="res://Scripts/TreesGenerator.gd" type="Script" id=9]
 [ext_resource path="res://Prefabs/Boar.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/Terrain.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scripts/HeightMapTexture.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/TerrainGenerator.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Environment.gd" type="Script" id=14]
+
+[sub_resource type="ArrayMesh" id=5]
+surfaces/0 = {
+"aabb": AABB( 0, 0.00580573, 0, 10.6667, 0.115761, 10.6667 ),
+"array_data": PoolByteArray( 0, 0, 0, 0, 4, 62, 190, 59, 0, 0, 0, 0, 150, 253, 191, 126, 171, 170, 170, 64, 148, 4, 113, 61, 0, 0, 0, 0, 150, 253, 191, 126, 0, 0, 0, 0, 70, 223, 98, 61, 171, 170, 170, 64, 150, 253, 191, 126, 171, 170, 170, 64, 148, 4, 113, 61, 0, 0, 0, 0, 251, 252, 114, 126, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 251, 252, 114, 126, 0, 0, 0, 0, 70, 223, 98, 61, 171, 170, 170, 64, 251, 252, 114, 126, 0, 0, 0, 0, 70, 223, 98, 61, 171, 170, 170, 64, 112, 254, 19, 126, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 112, 254, 19, 126, 0, 0, 0, 0, 118, 43, 37, 61, 171, 170, 42, 65, 112, 254, 19, 126, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 22, 255, 19, 126, 171, 170, 170, 64, 53, 208, 161, 61, 171, 170, 42, 65, 22, 255, 19, 126, 0, 0, 0, 0, 118, 43, 37, 61, 171, 170, 42, 65, 22, 255, 19, 126, 171, 170, 170, 64, 148, 4, 113, 61, 0, 0, 0, 0, 155, 1, 224, 127, 171, 170, 42, 65, 186, 90, 92, 61, 0, 0, 0, 0, 155, 1, 224, 127, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 155, 1, 224, 127, 171, 170, 42, 65, 186, 90, 92, 61, 0, 0, 0, 0, 155, 1, 136, 126, 171, 170, 42, 65, 226, 194, 116, 61, 171, 170, 170, 64, 155, 1, 136, 126, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 155, 1, 136, 126, 171, 170, 170, 64, 5, 248, 248, 61, 171, 170, 170, 64, 116, 1, 138, 125, 171, 170, 42, 65, 226, 194, 116, 61, 171, 170, 170, 64, 116, 1, 138, 125, 171, 170, 170, 64, 53, 208, 161, 61, 171, 170, 42, 65, 116, 1, 138, 125, 171, 170, 42, 65, 226, 194, 116, 61, 171, 170, 170, 64, 25, 1, 64, 126, 171, 170, 42, 65, 107, 74, 5, 61, 171, 170, 42, 65, 25, 1, 64, 126, 171, 170, 170, 64, 53, 208, 161, 61, 171, 170, 42, 65, 25, 1, 64, 126 ),
+"array_index_data": PoolByteArray( 0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0, 11, 0, 12, 0, 13, 0, 14, 0, 15, 0, 16, 0, 17, 0, 18, 0, 19, 0, 20, 0, 21, 0, 22, 0, 23, 0 ),
+"blend_shape_data": [  ],
+"format": 2194691,
+"index_count": 24,
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 24
+}
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.262745, 0.870588, 0.117647, 1 )
+
+[sub_resource type="PlaneMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+albedo_color = Color( 0, 0.266667, 0.776471, 0.980392 )
+
+[sub_resource type="Image" id=9]
+data = {
+"data": PoolByteArray( 0, 0, 0, 7, 7, 7, 6, 6, 6, 7, 7, 7, 15, 15, 15, 7, 7, 7, 5, 5, 5, 10, 10, 10, 4, 4, 4 ),
+"format": "RGB8",
+"height": 3,
+"mipmaps": false,
+"width": 3
+}
+
+[sub_resource type="ImageTexture" id=7]
+image = SubResource( 9 )
+size = Vector2( 3, 3 )
+
+[sub_resource type="ConcavePolygonShape" id=8]
+data = PoolVector3Array( 0, 0.0058, 0, 5.3333, 0.0588, 0, 0, 0.0554, 5.3333, 5.3333, 0.0588, 0, 5.3333, 0.1216, 5.3333, 0, 0.0554, 5.3333, 0, 0.0554, 5.3333, 5.3333, 0.1216, 5.3333, 0, 0.0403, 10.6667, 5.3333, 0.1216, 5.3333, 5.3333, 0.079, 10.6667, 0, 0.0403, 10.6667, 5.3333, 0.0588, 0, 10.6667, 0.0538, 0, 5.3333, 0.1216, 5.3333, 10.6667, 0.0538, 0, 10.6667, 0.0598, 5.3333, 5.3333, 0.1216, 5.3333, 5.3333, 0.1216, 5.3333, 10.6667, 0.0598, 5.3333, 5.3333, 0.079, 10.6667, 10.6667, 0.0598, 5.3333, 10.6667, 0.0325, 10.6667, 5.3333, 0.079, 10.6667 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -20,9 +61,10 @@ script = ExtResource( 6 )
 [node name="CameraController" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, 64.055, 102.815, 57.536 )
 
-[node name="Axe" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.0303, 16.2766, 0.0527 )
+[node name="Axe" parent="Player" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Tree" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0743, 0, 7.52273 )
@@ -38,6 +80,7 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8225, 0, -6.31197 )
 
 [node name="Navigation" type="Navigation" parent="."]
+visible = false
 
 [node name="Terrain" parent="Navigation" instance=ExtResource( 11 )]
 
@@ -49,6 +92,42 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.1054, 0, -69.1062 )
 
 [node name="Enemy3" parent="Navigation" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -59.516, 0, -0.637711 )
+
+[node name="Environment" type="Spatial" parent="."]
+script = ExtResource( 14 )
+
+[node name="Terrain" type="StaticBody" parent="Environment"]
+script = ExtResource( 13 )
+width = 600
+depth = 600
+smoothing = 7.0
+is_random_seed = true
+height = 150
+default_seed = "{hour:11, minute:15, second:20}"
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Terrain"]
+mesh = SubResource( 5 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Terrain/MeshInstance"]
+transform = Transform( 8, 0, 0, 0, 1, 0, 0, 0, 8, 8, 10, 8 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="Control" type="Control" parent="Environment/Terrain"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Environment/Terrain/Control"]
+margin_left = 887.0
+margin_top = 6.0
+margin_right = 1016.0
+margin_bottom = 135.0
+texture = SubResource( 7 )
+script = ExtResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Terrain"]
+shape = SubResource( 8 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 40.0
@@ -119,3 +198,6 @@ margin_right = 199.0
 margin_bottom = 9.0
 rect_pivot_offset = Vector2( 0, 4 )
 color = Color( 1, 0.913725, 0.223529, 1 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.347842, -0.476769, -0.807278, 0.916346, 0.354986, 0.185188, 0.19828, -0.804162, 0.560364, -0.417305, 45.9492, 23.7704 )
