@@ -1,49 +1,33 @@
-class_name FiniteStateMachine
 extends Node
+class_name FiniteStateMachine
 
 var states = {}
-var current_state
+var current_state_name
+var current_state setget , get_current_state
 
-class State:
-	var pre_action : FuncRef
-	var action : FuncRef
-	var after_action : FuncRef
-	
-	func process_start():
-		if pre_action.is_valid(): pre_action.call_func()
-	
-	func process_update(delta = 0):
-		if action.is_valid(): action.call_func(delta)
-	
-	func process_end() :
-		if after_action.is_valid(): after_action.call_func()
+func get_current_state():
+	return current_state
 
 
-func add_state(name, action : FuncRef, pre_action : FuncRef = null, after_action: FuncRef = null):
-	var state = State.new()
-	state.pre_action = pre_action if pre_action else FuncRef.new()
-	state.action = action if action else FuncRef.new()
-	state.after_action = after_action if after_action else FuncRef.new()
+func add_state(name, state : FiniteStateMachineState):
 	states[name] = state
-	
-
-func add_state_auto(name, object, func_name):
-	var pre_action = funcref(object, func_name + "_start")
-	var action = funcref(object, func_name)
-	var after_action = funcref(object, func_name + "_end")
-	add_state(name, action, pre_action, after_action)
 	
 	
 func switch_state(name):
 	if !states.has(name):
 		print(name, "is a not state")
 		return
-	if current_state: current_state.process_end()
+	if current_state: current_state._on_end()
 	current_state = states[name]
-	current_state.process_start()
+	current_state._on_start()
 	
 	
 func update(delta):
-	if current_state: current_state.process_update(delta)
+	if current_state:
+		var new_state_name = current_state._on_update(delta)
+		if states.has(new_state_name):
+			var new_state = states[new_state_name]
+			if new_state != current_state:
+				switch_state(new_state_name)
 	
 

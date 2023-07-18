@@ -17,6 +17,26 @@ var move_direction = Vector3.ZERO
 var stamina_bar_value : float = 1
 const G = 9.8
 
+var _fsm = FiniteStateMachine.new()
+
+enum State {IDLE, WALK, RUN}
+
+func _ready():
+	_fsm.add_state_auto(State.IDLE, self, "_process_idle")
+	_fsm.add_state_auto(State.WALK, self, "_process_walk")
+	_fsm.add_state_auto(State.RUN, self, "_process_walk")
+	_fsm.switch_state(State.IDLE)
+	
+func _process_idle(delta):
+	pass
+	
+func _process_walk(delta):
+	pass
+	
+func _process_run(delta):
+	pass
+	
+
 func take_damage(damage : int):
 	var health = get_node("/root/Spatial/Control/Health/Bar")
 	health.rect_scale.x -= damage * 0.01

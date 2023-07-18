@@ -1,6 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/FiniteStateMachine.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/EnemyWalkState.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -128,6 +130,12 @@ material/0 = SubResource( 11 )
 [node name="CollisionShape" type="CollisionShape" parent="Area2"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 shape = SubResource( 12 )
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource( 3 )
 
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
