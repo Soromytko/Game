@@ -1,7 +1,7 @@
 class_name Picker
-extends Area
+extends Area3D
 
-onready var inventory = get_parent().get_node("Inventory")
+@onready var inventory = get_parent().get_node("Inventory")
 
 func _on_Area_body_entered(body):
 	if body is Equipment:

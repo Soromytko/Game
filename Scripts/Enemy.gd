@@ -1,45 +1,41 @@
-extends KinematicBody
-class_name Enemy
+class_name Enemy extends CharacterBody3D
 
-export var move_speed : float = 5
+@export var move_speed : float = 5
 
-onready var nav_agent = $"NavigationAgent"
-onready var raycast = $"RayCast"
-onready var animation_player = $"AnimationPlayer"
+@onready var nav_agent = $"NavigationAgent3D"
+@onready var raycast = $"RayCast3D"
+@onready var animation_player = $"AnimationPlayer"
 
 var target = null
 var is_player_invisible : bool = false
 
-var fsm = FiniteStateMachine.new()
-
 func _input(event):
 	if Input.is_action_just_pressed("Alt"):
 		is_player_invisible = !is_player_invisible
-		var player = get_node("/root/Spatial/Player/Skin")
-		var material = player.get_surface_material(0)
+		var player = get_node("/root/Node3D/Player/Skin")
+		var material = player.get_surface_override_material(0)
 #			print(material.transparency)
 		if is_player_invisible:
 			material.albedo_color = Color(1, 1, 1, 0.2)
 		else:
 			material.albedo_color = Color(1, 1, 1, 1)
-		player.set_surface_material(0, material)
+		player.set_surface_override_material(0, material)
 
 
 func move_to(target : Vector3):
-	nav_agent.set_target_location(target)
+	nav_agent.set_target_position(target)
 	
 
 func _ready():
-	nav_agent.set_navigation(get_node("/root/Spatial/Navigation"))
-	move_to(global_transform.origin)
+	pass
+#	nav_agent.set_navigation(get_node("/root/Node3D/Navigation"))
+#	move_to(global_transform.origin)
 	
 #	fsm.add_state(EnemyWalkState.new(State.WALK, self))
 #	fsm.add_state(EnemyPursueState.new(State.PURSUIT, self))
 #	fsm.add_state(EnemyWalkState.new(State.LOOK_AROUND, self))
 #
 #	fsm.switch_state(State.WALK)
-	
-
 	
 
 func _check_player():

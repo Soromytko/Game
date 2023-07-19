@@ -1,17 +1,17 @@
+@tool
 extends Node
-tool
 
-export(bool) var generate setget _generate
-export var grain_size : int = 5
-export var angularity : int = 5
+@export var generate: bool: set = _generate
+@export var grain_size : int = 5
+@export var angularity : int = 5
 
 
-var mesh_instance : MeshInstance
+var mesh_instance : MeshInstance3D
 var texture_rect : TextureRect
 
 
 func _get_components():
-	mesh_instance = $MeshInstance
+	mesh_instance = $MeshInstance3D
 	texture_rect = $Control/TextureRect
 	
 

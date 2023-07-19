@@ -1,5 +1,5 @@
 class_name Equipment
-extends RigidBody
+extends RigidBody3D
 		
 func playA():
 	$AnimationPlayer.playback_speed = 2

@@ -1,7 +1,9 @@
+class_name StateMachineState
 extends Node
-class_name FiniteStateMachineState
 
-var state_name
+var state_name = null:
+	get:
+		return state_name
 
 func _init(state_name):
 	self.state_name = state_name

@@ -1,41 +1,19 @@
-class_name Player
-extends KinematicBody
+class_name Player extends CharacterBody3D
 
 signal move_event(position)
 
-onready var camera = get_node("/root/Spatial/CameraController")
+@export var camera : ThirdPersonCamera
 
-export var walk_speed : float = 10
-export var sprint_speed : float = 30
-export var rotation_speed : float = 10
-export var jump_force : float = 25
-export var gravity : float = 5
+@export var walk_speed : float = 10
+@export var sprint_speed : float = 30
+@export var rotation_speed : float = 10
+@export var jump_force : float = 25
+@export var gravity : float = 5
 
 var handle_speed = walk_speed
-var velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
 var stamina_bar_value : float = 1
 const G = 9.8
-
-var _fsm = FiniteStateMachine.new()
-
-enum State {IDLE, WALK, RUN}
-
-func _ready():
-	_fsm.add_state_auto(State.IDLE, self, "_process_idle")
-	_fsm.add_state_auto(State.WALK, self, "_process_walk")
-	_fsm.add_state_auto(State.RUN, self, "_process_walk")
-	_fsm.switch_state(State.IDLE)
-	
-func _process_idle(delta):
-	pass
-	
-func _process_walk(delta):
-	pass
-	
-func _process_run(delta):
-	pass
-	
 
 func take_damage(damage : int):
 	var health = get_node("/root/Spatial/Control/Health/Bar")
@@ -49,11 +27,13 @@ func get_input() -> Vector3:
 	input.z = Input.get_action_strength("move_back") - Input.get_action_strength("move_forward")
 	return input.normalized() if input.length() > 1 else input
 
+
 func move(direction : Vector3):
 	velocity.x = direction.x * handle_speed
-#	velocity.y = direction.y * 10
+#	new_velocity.y = direction.y * 10
 	velocity.z = direction.z * handle_speed
-	velocity = move_and_slide(velocity, Vector3.UP)
+	move_and_slide()
+	
 	
 var is_build_mode = false
 func set_build_mode(active):
@@ -68,7 +48,6 @@ func jump():
 		velocity.y += jump_force
 		
 		
-onready var e = get_node("/root/Spatial/Enemy").get_script()
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
 		jump()
@@ -78,13 +57,19 @@ func _input(event):
 				var collider = $RayCast.get_collider()
 				if collider is TreeWooden:
 					collider.destroy()
-				elif collider is e:
-					collider.queue_free()
+				elif collider is Enemy:
+					collider.queue_freeА 
 		
-var a : float = 1	
+		
+func _ready():
+	if !camera:
+		camera = get_node("/root/Node3D/ThirdPersonCamera")
+	if camera:
+		camera.add_excluded_object(self)
+		
 		
 func _process(delta):
-	var stamina = get_node("/root/Spatial/Control/Stamina/Bar")
+#	var stamina = get_node("/root/Spatial/Control/Stamina/Bar")
 	
 	if Input.is_action_pressed("sprint"):
 		stamina_bar_value = move_toward(stamina_bar_value, 0, delta / 2)
@@ -97,16 +82,22 @@ func _process(delta):
 	if Input.is_action_just_released("sprint"):
 		handle_speed = walk_speed
 		
-	stamina.rect_scale.x = stamina_bar_value
+#	stamina.rect_scale.x = stamina_bar_value
+
+func _get_relative_input(input : Vector3):
+	if camera:
+		return camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
+	return input
 
 func _physics_process(delta):
 	var input = get_input()
-	var direction = camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
+#	print(input)
+#	print(get_node("/root/Node3D/CameraController"))
+	var direction = _get_relative_input(input)
 #	rotation_degrees.y = camera.rotation_degrees.y
 #	print(Quat(camera.global_transform.basis))
-
-
 	
+
 	if (input != Vector3.ZERO):
 		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), rotation_speed * delta)
 	
@@ -118,4 +109,7 @@ func _physics_process(delta):
 	velocity.y -= gravity * G * delta
 	move(direction)
 	emit_signal("move_event", self.transform.origin)
-	pass
+
+	if camera:
+		camera.follow(self.transform.origin)
+	

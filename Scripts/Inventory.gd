@@ -1,10 +1,10 @@
 class_name Inventory
 extends Node
 
-onready var hand = get_parent().get_node("Hand")
+@onready var hand = get_parent().get_node("Hand")
 # onready var axe = get_node("/root/Spatial/Axe2")
-onready var wood_count_text = get_node("/root/Spatial/Control/WoodCount")
-onready var foliage_count_text = get_node("/root/Spatial/Control/LeafCount")
+@onready var wood_count_text = get_node("/root/Node3D/Control/WoodCount")
+@onready var foliage_count_text = get_node("/root/Node3D/Control/LeafCount")
 
 signal wood_count_changed(count)
 signal foliage_count_changed(count)
@@ -37,8 +37,8 @@ func _on_foliage_count_changed(count):
 	foliage_count_text.text = str(count)
 
 func _ready():
-	self.connect("wood_count_changed", self, "_on_wood_count_changed")
-	self.connect("foliage_count_changed", self, "_on_foliage_count_changed")
+	self.connect("wood_count_changed", Callable(self, "_on_wood_count_changed"))
+	self.connect("foliage_count_changed", Callable(self, "_on_foliage_count_changed"))
 	
 
 func set_parent2(parent, child):
@@ -66,13 +66,14 @@ func add_item0(item : Item):
 	
 	
 func add_item(item):
-	item.get_node("CollisionShape").disabled = true
-	item.mode = RigidBody.MODE_STATIC
-	TransformExtension.reparent(item, hand)
-	item.rotation_degrees = Vector3.ZERO
-#	item.b = true
-	item.transform.origin = Vector3.ZERO
-#	item.global_transform.origin = hand.global_transform.origin
+	return
+#	item.get_node("CollisionShape3D").disabled = true
+#	item.mode = RigidBody3D.FREEZE_MODE_STATIC
+#	TransformExtension.reparent(item, hand)
+#	item.rotation_degrees = Vector3.ZERO
+##	item.b = true
+#	item.transform.origin = Vector3.ZERO
+##	item.global_transform.origin = hand.global_transform.origin
 
 
 

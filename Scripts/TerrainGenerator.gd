@@ -1,26 +1,25 @@
-extends Spatial
-tool
+extends Node3D
 
 #var _ = preload("res://Scripts/DiamondSquare.gd")
 
-export(bool) var generate setget generate
-export var width : int = 16
-export var depth : int = 16
-export var smoothing : float = 1
-export var roughness : float = 0.1
-export var is_random_seed = false
-export var height = 2
-export var sea_level = 10
-export var default_seed : String = "Something"
+@export var generate: bool: set = generateM
+@export var width : int = 16
+@export var depth : int = 16
+@export var smoothing : float = 1
+@export var roughness : float = 0.1
+@export var is_random_seed = false
+@export var height = 2
+@export var sea_level = 10
+@export var default_seed : String = "Something"
 
 var mesh_instance
 var water_mesh_instance
 
 var vertx = []
 
-func generate(__):
-	mesh_instance = $MeshInstance
-	water_mesh_instance = $MeshInstance/MeshInstance
+func generateM(value):
+	mesh_instance = $MeshInstance3D
+	water_mesh_instance = $MeshInstance3D/MeshInstance3D
 	_generate()
 
 
@@ -32,9 +31,9 @@ func build_mesh(vertices, indices):
 	
 	var mesh_data = []
 	mesh_data.resize(ArrayMesh.ARRAY_MAX)
-	mesh_data[ArrayMesh.ARRAY_VERTEX] = PoolVector3Array(vertices)
-	mesh_data[ArrayMesh.ARRAY_INDEX] = PoolIntArray(indices)
-	mesh_data[ArrayMesh.ARRAY_NORMAL] = PoolVector3Array(normals);
+	mesh_data[ArrayMesh.ARRAY_VERTEX] = PackedVector3Array(vertices)
+	mesh_data[ArrayMesh.ARRAY_INDEX] = PackedInt32Array(indices)
+	mesh_data[ArrayMesh.ARRAY_NORMAL] = PackedVector3Array(normals);
 	
 	var array_mesh = ArrayMesh.new()
 	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_data)
@@ -47,7 +46,7 @@ func build_mesh(vertices, indices):
 	
 	print("mesh is built")
 	
-	$CollisionShape.shape = array_mesh.create_trimesh_shape()
+	$CollisionShape3D.shape = array_mesh.create_trimesh_shape()
 	
 
 
@@ -64,7 +63,7 @@ func _generate_heightmap(x_count : int, z_count : int, step : float):
 	
 	var rng = RandomNumberGenerator.new()
 	
-	rng.seed = hash(OS.get_datetime())
+	rng.seed = hash(Time.get_datetime_dict_from_system())
 		
 	for x in x_count:
 		for z in z_count:
@@ -83,7 +82,7 @@ func _generate():
 	var heightmapGenerator = DiamondSquare.new()
 #	default_seed = str(OS.get_time()) if is_random_seed else "Something"
 #111fgsdf
-	if is_random_seed: default_seed = str(OS.get_time())
+	if is_random_seed: default_seed = str(Time.get_unix_time_from_system())
 	var heights = heightmapGenerator.generate(Vector2(width_s, depth_s), roughness, hash(default_seed))
 #	var vertices = _generate_heightmap(width_s, depth_s, 1)
 
@@ -127,7 +126,7 @@ func _generate():
 	water_mesh_instance.scale = Vector3(width / 2, 1, depth / 2)
 	
 	var textureRect = $"Control/TextureRect"
-	textureRect.update_with_heights(heights)
+#	textureRect.update_with_heights(heights)
 
 
 #func _process(delta):

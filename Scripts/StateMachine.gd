@@ -1,15 +1,16 @@
-extends Node
-class_name FiniteStateMachine
+class_name StateMachine extends Node
 
 var states = {}
 var current_state_name
-var current_state setget , get_current_state
+var current_state
 
-func get_current_state():
-	return current_state
+func _ready():
+	for child in get_children():
+		if child is StateMachineState:
+			add_state(child.state_name, child)
 
 
-func add_state(name, state : FiniteStateMachineState):
+func add_state(name, state : StateMachineState):
 	states[name] = state
 	
 	

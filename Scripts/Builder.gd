@@ -1,9 +1,9 @@
-extends RayCast
+extends RayCast3D
 
 # var camera = get_node("/root/Spatial/CameraController")
 
-onready var player = get_node("/root/Spatial/Player")
-onready var inventory = get_node("/root/Spatial/Player/Inventory")
+@onready var player = get_node("/root/Node3D/Player")
+@onready var inventory = get_node("/root/Node3D/Player/Inventory")
 
 var wall_scene = preload("res://Prefabs/Wall.tscn")
 var roof_scene = preload("res://Prefabs/Roof.tscn")
@@ -14,18 +14,18 @@ var roof_instance
 var brash #wall/roof
 
 func _ready():
-	wall_instance = wall_scene.instance()
-	get_node("/root/Spatial").call_deferred("add_child", wall_instance)
+	wall_instance = wall_scene.instantiate()
+	get_node("/root/Node3D").call_deferred("add_child", wall_instance)
 	wall_instance.visible = false
 	for child in wall_instance.get_children():
-		if child is CollisionShape:
+		if child is CollisionShape3D:
 			child.disabled = true
 	
-	roof_instance = roof_scene.instance()
-	get_node("/root/Spatial").call_deferred("add_child", roof_instance)
+	roof_instance = roof_scene.instantiate()
+	get_node("/root/Node3D").call_deferred("add_child", roof_instance)
 	roof_instance.visible = false
 	for child in roof_instance.get_children():
-		if child is CollisionShape:
+		if child is CollisionShape3D:
 			child.disabled = true
 	
 	brash = wall_instance
@@ -33,7 +33,7 @@ func _ready():
 	
 func _input(event):
 	if event is InputEventKey:
-		match event.scancode:
+		match event.keycode:
 			KEY_1:
 				is_build_mode = false
 				print("build mode is disable")
@@ -54,12 +54,12 @@ func _input(event):
 func _build():
 	var construction
 	if brash == wall_instance:
-		construction = wall_scene.instance()
+		construction = wall_scene.instantiate()
 	elif brash == roof_instance:
-		construction = roof_scene.instance()
+		construction = roof_scene.instantiate()
 		
 	remove()
-	get_node("/root/Spatial").add_child(construction)
+	get_node("/root/Node3D").add_child(construction)
 	construction.transform.origin = brash.transform.origin
 	construction.rotation_degrees = brash.rotation_degrees
 	
