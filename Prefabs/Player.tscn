@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1uwudfm0vnol"]
+[gd_scene load_steps=9 format=3 uid="uid://b1uwudfm0vnol"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Picker.gd" id="2"]
 [ext_resource type="Script" path="res://Scripts/Inventory.gd" id="3"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="4_pehtr"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerIdleState.gd" id="5_n5ldg"]
 
 [sub_resource type="CapsuleMesh" id="1"]
 
@@ -44,6 +46,13 @@ transform = Transform3D(0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.99
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(0.999999, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, 0, 2.866, 0)
 target_position = Vector3(0, 0, -5)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_pehtr")
+initial_state = NodePath("PlayerIdleState")
+
+[node name="PlayerIdleState" type="Node" parent="StateMachine"]
+script = ExtResource("5_n5ldg")
 
 [connection signal="area_entered" from="Area3D" to="Area3D" method="_on_Area_area_entered"]
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_Area_body_entered"]

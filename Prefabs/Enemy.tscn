@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://chdhk07v3h66n"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1"]
-[ext_resource type="Script" path="res://Scripts/StateMachine.gd" id="2_28144"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="2_28144"]
 [ext_resource type="Script" path="res://Scripts/EnemyWalkState.gd" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="1"]

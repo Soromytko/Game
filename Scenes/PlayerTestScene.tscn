@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dq7diuyj703y5"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwudfm0vnol" path="res://Prefabs/Player.tscn" id="1_ducig"]
-[ext_resource type="PackedScene" path="res://Prefabs/Camera.tscn" id="2_crxb7"]
+[ext_resource type="PackedScene" uid="uid://bq87e5wf0o3k0" path="res://Prefabs/Camera.tscn" id="2_crxb7"]
 
 [sub_resource type="HeightMapShape3D" id="HeightMapShape3D_2gnsc"]
 

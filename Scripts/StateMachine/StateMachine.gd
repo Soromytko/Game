@@ -1,5 +1,7 @@
 class_name StateMachine extends Node
 
+@export var initial_state : StateMachineState
+
 var states = {}
 var current_state_name
 var current_state
@@ -7,7 +9,13 @@ var current_state
 func _ready():
 	for child in get_children():
 		if child is StateMachineState:
-			add_state(child.state_name, child)
+			child.transitioned.connect(_on_switch_state)
+			add_state(child.name, child)
+			if initial_state == child:
+				current_state = initial_state
+				print(initial_state)
+#				switch_state(child.name)
+	
 
 
 func add_state(name, state : StateMachineState):
@@ -30,5 +38,20 @@ func update(delta):
 			var new_state = states[new_state_name]
 			if new_state != current_state:
 				switch_state(new_state_name)
+				
+
+func _on_switch_state(state_name):
+	switch_state(state_name)
+	
+
+func _process(delta):
+	if current_state:
+		current_state._on_update(delta)
+	
+	
+func _physics_process(delta):
+	if current_state:
+		current_state._on_physics_update(delta)
+				
 	
 

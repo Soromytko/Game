@@ -15,6 +15,7 @@ var move_direction = Vector3.ZERO
 var stamina_bar_value : float = 1
 const G = 9.8
 
+
 func take_damage(damage : int):
 	var health = get_node("/root/Spatial/Control/Health/Bar")
 	health.rect_scale.x -= damage * 0.01
@@ -46,6 +47,14 @@ func set_build_mode(active):
 func jump():
 	if(is_on_floor()):
 		velocity.y += jump_force
+
+	
+func apply_jump(force : float = jump_force):
+	velocity.y += force
+		
+		
+func apply_gravity(force : float = gravity):
+	velocity.y -= force * G
 		
 		
 func _input(event):
@@ -90,6 +99,7 @@ func _get_relative_input(input : Vector3):
 	return input
 
 func _physics_process(delta):
+	return
 	var input = get_input()
 #	print(input)
 #	print(get_node("/root/Node3D/CameraController"))
