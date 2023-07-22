@@ -10,8 +10,8 @@ func _on_update(delta):
 		if Input.is_action_just_pressed("jump"):
 			return State.JUMP
 	
-	player.upply_gravity()
-	
-	player.move_and_slide()
-	
-	return State.WALK
+	player.apply_gravity(delta)
+	player.set_move_direction(relative_input)
+	player.move(delta * 100 * 5)
+	if input != Vector3.ZERO:
+		player.rotate_to_direction(relative_input, delta)

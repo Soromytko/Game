@@ -26,9 +26,9 @@ func switch_state(name):
 	if !states.has(name):
 		print(name, "is a not state")
 		return
-	if current_state: current_state._on_end()
+	if current_state: current_state._on_exit()
 	current_state = states[name]
-	current_state._on_start()
+	current_state._on_enter()
 	
 	
 func update(delta):

@@ -15,6 +15,8 @@ var move_direction = Vector3.ZERO
 var stamina_bar_value : float = 1
 const G = 9.8
 
+var _direction = Vector3.ZERO
+
 
 func take_damage(damage : int):
 	var health = get_node("/root/Spatial/Control/Health/Bar")
@@ -29,11 +31,12 @@ func get_input() -> Vector3:
 	return input.normalized() if input.length() > 1 else input
 
 
-func move(direction : Vector3):
-	velocity.x = direction.x * handle_speed
-#	new_velocity.y = direction.y * 10
-	velocity.z = direction.z * handle_speed
+func move(speed : float):
+	velocity.x = _direction.x * speed
+	velocity.z = _direction.z * speed
+	print(velocity)
 	move_and_slide()
+	camera.follow(transform.origin)
 	
 	
 var is_build_mode = false
@@ -44,19 +47,39 @@ func set_build_mode(active):
 	is_build_mode = active
 	pass
 	
+	
 func jump():
 	if(is_on_floor()):
 		velocity.y += jump_force
-
+		
+		
+func set_move_direction(direction : Vector3):
+	_direction = direction
 	
+		
 func apply_jump(force : float = jump_force):
-	velocity.y += force
-		
-		
+	velocity.y += force	
+	
+	
 func apply_gravity(force : float = gravity):
 	velocity.y -= force * G
-		
-		
+	
+	
+func apply_velocity(velocity : Vector3 = self.velocity):
+	self.velocity = velocity
+	print(velocity)
+	move_and_slide()
+	_move_camera()
+	
+
+func rotate_to_direction(direction : Vector3, speed : float):
+	rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), rotation_speed * speed)
+	
+	
+func _move_camera(target : Vector3 = self.transform.origin):
+	if camera: camera.follow(target)
+	
+	
 func _input(event):
 	if Input.is_action_just_pressed("jump"):
 		jump()
@@ -93,7 +116,7 @@ func _process(delta):
 		
 #	stamina.rect_scale.x = stamina_bar_value
 
-func _get_relative_input(input : Vector3):
+func get_relative_input(input : Vector3):
 	if camera:
 		return camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
 	return input
@@ -103,7 +126,7 @@ func _physics_process(delta):
 	var input = get_input()
 #	print(input)
 #	print(get_node("/root/Node3D/CameraController"))
-	var direction = _get_relative_input(input)
+	var direction = get_relative_input(input)
 #	rotation_degrees.y = camera.rotation_degrees.y
 #	print(Quat(camera.global_transform.basis))
 	
