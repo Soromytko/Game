@@ -1,12 +1,6 @@
-class_name Brigadier extends RayCast3D
+class_name Brigadier extends Node3D
 
-var currnet_builder : Builder
+@export var state_machine : StateMachine
 
-@export var builder : Builder
-
-func _physics_process(delta):
-#	if Input.is_action_just_pressed("Click"):
-#		current_builder.build()
-	if is_colliding():
-		var point = get_collision_point()
-		builder.process_build(point)
+func _ready():
+	state_machine.switch_state("FoundationBuilder")

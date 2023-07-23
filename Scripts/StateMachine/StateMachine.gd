@@ -30,7 +30,7 @@ func switch_state(name):
 	current_state = states[name]
 	current_state._on_enter()
 	
-	
+# AAAAAAAAAAAAA
 func update(delta):
 	if current_state:
 		var new_state_name = current_state._on_update(delta)

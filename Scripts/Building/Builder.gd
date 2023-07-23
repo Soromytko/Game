@@ -1,9 +1,11 @@
-class_name Builder extends Node3D
+class_name Builder extends StateMachineState
 
-func build():
-	pass
-	
-	
-func process_build(point : Vector3):
-	pass
-	
+@export var ray_cast : RayCast3D
+
+#func build():
+#	pass
+#
+#
+#func process_build(point : Vector3):
+#	pass
+#
