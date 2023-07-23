@@ -34,7 +34,6 @@ func get_input() -> Vector3:
 func move(speed : float):
 	velocity.x = _direction.x * speed
 	velocity.z = _direction.z * speed
-	print(velocity)
 	move_and_slide()
 	camera.follow(transform.origin)
 	
@@ -56,7 +55,7 @@ func jump():
 func set_move_direction(direction : Vector3):
 	_direction = direction
 	
-		
+	
 func apply_jump(force : float = jump_force):
 	velocity.y += force	
 	
@@ -67,7 +66,6 @@ func apply_gravity(force : float = gravity):
 	
 func apply_velocity(velocity : Vector3 = self.velocity):
 	self.velocity = velocity
-	print(velocity)
 	move_and_slide()
 	_move_camera()
 	
@@ -81,8 +79,6 @@ func _move_camera(target : Vector3 = self.transform.origin):
 	
 	
 func _input(event):
-	if Input.is_action_just_pressed("jump"):
-		jump()
 	if Input.is_action_just_pressed("Click") and not is_build_mode:
 		if $Hand.get_child_count() > 0:
 			if $RayCast.is_colliding():
@@ -98,6 +94,7 @@ func _ready():
 		camera = get_node("/root/Node3D/ThirdPersonCamera")
 	if camera:
 		camera.add_excluded_object(self)
+		camera.transform.origin = transform.origin
 		
 		
 func _process(delta):

@@ -1,8 +1,8 @@
 class_name PlayerIdleState extends PlayerState
 
-func _on_update(delta):
-	
-	player.apply_gravity()
+func _on_physics_update(delta):
+	if !player.is_on_floor():
+		player.apply_gravity()
 	player.apply_velocity()
 	
 #	if !player.is_on_floor():
@@ -10,14 +10,9 @@ func _on_update(delta):
 	
 	var input = player.get_input()
 	if input != Vector3.ZERO:
-		print("dsdsf")
 		return _switch_state("PlayerWalkState")
 		
 		
 	if Input.is_action_just_pressed("jump"):
-		return State.JUMP
+		return _switch_state("PlayerJumpState")
 		
-
-func _on_physics_update(delta):
-	pass
-	

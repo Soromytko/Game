@@ -8,10 +8,11 @@ func _on_update(delta):
 	
 	if player.is_on_floor():
 		if Input.is_action_just_pressed("jump"):
-			return State.JUMP
-	
-	player.apply_gravity(delta)
+			return _switch_state("PlayerJumpState")
+	else:
+		player.apply_gravity(delta)
+
 	player.set_move_direction(relative_input)
-	player.move(delta * 100 * 5)
+	player.move(delta * 500)
 	if input != Vector3.ZERO:
 		player.rotate_to_direction(relative_input, delta)

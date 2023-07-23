@@ -1,7 +1,7 @@
 extends Node3D
 
 var tree_scene = preload("res://Prefabs/Tree.tscn")
-var enemy_scene = preload("res://Prefabs/Enemy.tscn")
+#var enemy_scene = preload("res://Prefabs/Enemy.tscn")
 @export var tree_density = 3
 
 var trees = []
@@ -23,11 +23,11 @@ func _ready():
 	var v = rng.randi_range(0, vertices.size() - 1)
 	get_node("/root/Node3D/Player").global_transform.origin = vertices[v]
 	
-	for i in 10:
-		var enemy = enemy_scene.instantiate()
-		get_node("/root/Node3D/Navigation").call_deferred("add_child", enemy)
-		v = rng.randi_range(0, vertices.size() - 1)
-		enemy.transform.origin = vertices[v]
+#	for i in 10:
+#		var enemy = enemy_scene.instantiate()
+#		get_node("/root/Node3D/Navigation").call_deferred("add_child", enemy)
+#		v = rng.randi_range(0, vertices.size() - 1)
+#		enemy.transform.origin = vertices[v]
 		
 	
 	

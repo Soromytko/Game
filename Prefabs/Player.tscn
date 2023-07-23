@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1uwudfm0vnol"]
+[gd_scene load_steps=11 format=3 uid="uid://b1uwudfm0vnol"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Picker.gd" id="2"]
 [ext_resource type="Script" path="res://Scripts/Inventory.gd" id="3"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="4_pehtr"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerIdleState.gd" id="5_n5ldg"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerJumpState.gd" id="6_ckhfm"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerWalkState.gd" id="6_kotiy"]
 
 [sub_resource type="CapsuleMesh" id="1"]
@@ -55,6 +56,10 @@ initial_state = NodePath("PlayerIdleState")
 
 [node name="PlayerIdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
 script = ExtResource("5_n5ldg")
+player = NodePath("../..")
+
+[node name="PlayerJumpState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("6_ckhfm")
 player = NodePath("../..")
 
 [node name="PlayerWalkState" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]

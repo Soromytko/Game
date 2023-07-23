@@ -1,11 +1,13 @@
 class_name PlayerJumpState extends PlayerState
 
 func _on_enter():
-	player.upply_jump()
+	player.apply_jump()
+	player.apply_velocity()
 	
 	
-func _on_update(delta):
-	player.upply_gravity()
+func _on_physics_update(delta):
+	player.apply_gravity(delta)
+	player.apply_velocity()
 	
 	if player.is_on_floor():
-		return State.IDLE
+		return _switch_state("PlayerIdleState")
