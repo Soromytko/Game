@@ -44,7 +44,6 @@ func set_build_mode(active):
 	if axe_cur != null:
 		axe_cur.visible = !active
 	is_build_mode = active
-	pass
 	
 	
 func jump():
@@ -92,9 +91,6 @@ func _input(event):
 func _ready():
 	if !camera:
 		camera = get_node("/root/Node3D/ThirdPersonCamera")
-	if camera:
-		camera.add_excluded_object(self)
-		camera.transform.origin = transform.origin
 		
 		
 func _process(delta):
@@ -118,28 +114,11 @@ func get_relative_input(input : Vector3):
 		return camera.transform.basis.x * input.x + camera.transform.basis.z * input.z
 	return input
 
+
+#@preload var 
+var is_build = true
 func _physics_process(delta):
-	return
-	var input = get_input()
-#	print(input)
-#	print(get_node("/root/Node3D/CameraController"))
-	var direction = get_relative_input(input)
-#	rotation_degrees.y = camera.rotation_degrees.y
-#	print(Quat(camera.global_transform.basis))
-	
-
-	if (input != Vector3.ZERO):
-		rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), rotation_speed * delta)
-	
-#	print(rad2deg(direction.angle_to(Vector3.FORWARD)))
-#	rotation_degrees.y = rad2deg(direction.angle_to(Vector3.FORWARD))
-	
-#	direction = -transform.basis.z if input != Vector3.ZERO else Vector3.ZERO
-
-	velocity.y -= gravity * G * delta
-	move(direction)
-	emit_signal("move_event", self.transform.origin)
-
-	if camera:
-		camera.follow(self.transform.origin)
+#	if is_build:
+		
+	pass
 	

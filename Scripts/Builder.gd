@@ -11,7 +11,7 @@ var roof_scene = preload("res://Prefabs/Roof.tscn")
 var is_build_mode = false
 var wall_instance
 var roof_instance
-var brash #wall/roof
+var brash # wall/roof
 
 func _ready():
 	wall_instance = wall_scene.instantiate()

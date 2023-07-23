@@ -19,6 +19,11 @@ height = 2.98644
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1")
+walk_speed = null
+sprint_speed = null
+rotation_speed = null
+jump_force = null
+gravity = null
 
 [node name="Skin" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 1.5, 0)

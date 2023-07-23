@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://pif06877040i"]
+
+[ext_resource type="Script" path="res://Scripts/Building/Brigadier.gd" id="1_as0f7"]
+[ext_resource type="Script" path="res://Scripts/Building/FoundationBuilder.gd" id="2_ug51r"]
+
+[node name="Building" type="RayCast3D"]
+target_position = Vector3(0, 0, -30)
+script = ExtResource("1_as0f7")
+
+[node name="FoundationBuilder" type="Node3D" parent="."]
+script = ExtResource("2_ug51r")

@@ -11,10 +11,6 @@ func follow(point : Vector3):
 	transform.origin = lerp(transform.origin, point, 0.1)
 
 
-func add_excluded_object(object):
-	$Pivot.add_excluded_object(object)
-	
-
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
