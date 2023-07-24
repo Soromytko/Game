@@ -13,7 +13,6 @@ func _ready():
 			add_state(child.name, child)
 			if initial_state == child:
 				current_state = initial_state
-				print(initial_state)
 #				switch_state(child.name)
 	
 
@@ -26,9 +25,13 @@ func switch_state(name):
 	if !states.has(name):
 		print(name, "is a not state")
 		return
+	if current_state_name == name:
+		return
+		
 	if current_state: current_state._on_exit()
 	current_state = states[name]
 	current_state._on_enter()
+	current_state_name = name
 	
 # AAAAAAAAAAAAA
 func update(delta):

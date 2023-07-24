@@ -23,17 +23,13 @@ func _on_enter():
 		var beam = _vertical_beam_scene.instantiate()
 		beam.set_process(false)
 		beam.visible = false
-		add_child(beam)
 		_beams.append(beam)
-	
-	add_child(_floor)
+		get_tree().get_root().add_child(beam)
+		
+	get_tree().get_root().add_child(_floor)
 	
 	_beams[0].set_process(true)
 	_beams[0].visible = true
-	
-#	get_tree().get_root().add_child(_beams[0])
-#	get_tree().get_root().add_child(_beams[3])
-
 	
 	
 func _on_update(delta):
@@ -67,6 +63,9 @@ func _on_update(delta):
 					if Input.is_action_just_pressed("Click"):
 						current_state = State.THREE
 						_beams[3].set_process(false)
+			State.THREE:
+				return
+				print(get_children().size())
 					
 		
 	

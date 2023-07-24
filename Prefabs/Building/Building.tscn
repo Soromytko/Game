@@ -11,9 +11,9 @@ state_machine = NodePath("StateMachine")
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -30)
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node3D" parent="."]
 script = ExtResource("2_tc26b")
 
-[node name="FoundationBuilder" type="Node3D" parent="StateMachine" node_paths=PackedStringArray("ray_cast")]
+[node name="FoundationBuilder" type="Node" parent="StateMachine" node_paths=PackedStringArray("ray_cast")]
 script = ExtResource("2_y8gro")
 ray_cast = NodePath("../../RayCast3D")
