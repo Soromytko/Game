@@ -7,4 +7,5 @@ func _ready():
 	
 	
 func _process(delta):
-	state_machine.switch_state("FoundationBuilder")
+#	state_machine.switch_state("FoundationBuilder")
+	state_machine.switch_state("BlockConstruction")

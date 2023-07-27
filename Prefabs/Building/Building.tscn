@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://pif06877040i"]
+[gd_scene load_steps=5 format=3 uid="uid://pif06877040i"]
 
 [ext_resource type="Script" path="res://Scripts/Building/Brigadier.gd" id="1_ycvd7"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="2_tc26b"]
 [ext_resource type="Script" path="res://Scripts/Building/FoundationBuilder.gd" id="2_y8gro"]
+[ext_resource type="Script" path="res://Scripts/Building/BlockConstruction.gd" id="4_h664t"]
 
 [node name="Building" type="Node3D" node_paths=PackedStringArray("state_machine")]
 script = ExtResource("1_ycvd7")
@@ -16,4 +17,10 @@ script = ExtResource("2_tc26b")
 
 [node name="FoundationBuilder" type="Node" parent="StateMachine" node_paths=PackedStringArray("ray_cast")]
 script = ExtResource("2_y8gro")
+ray_cast = NodePath("../../RayCast3D")
+
+[node name="BlockConstruction" type="Node" parent="StateMachine" node_paths=PackedStringArray("ray_cast")]
+script = ExtResource("4_h664t")
+phantom_block_path = "res://Prefabs/Building/Foundation/Phantom/PhantomVerticalBeam.tscn"
+real_block_path = "res://Prefabs/Building/Foundation/Phantom/VerticalBeam.tscn"
 ray_cast = NodePath("../../RayCast3D")
