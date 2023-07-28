@@ -18,6 +18,13 @@ func _on_update(delta):
 	if ray_cast.is_colliding():
 		var point = ray_cast.get_collision_point()
 		_phantom_block.global_position = point
+		
+		area.global_position = point
+#		for body in area.get_overlapping_bodies():
+#			if body is Construction:
+#				point = body.get_nearest_point(point)
+#				break
+#
 		if Input.is_action_just_pressed("Click"):
 			var construction = _real_block_scene.instantiate()
 			construction.global_position = point
