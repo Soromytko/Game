@@ -6,6 +6,7 @@ var states = {}
 var current_state_name
 var current_state
 
+
 func _ready():
 	for child in get_children():
 		if child is StateMachineState:

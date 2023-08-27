@@ -1,6 +1,6 @@
 class_name StateMachineState extends Node
 
-signal transitioned 
+signal transitioned
 
 func _switch_state(state_name):
 	emit_signal("transitioned", state_name)

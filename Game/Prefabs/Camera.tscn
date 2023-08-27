@@ -14,7 +14,7 @@ v_min = -85
 
 [node name="Pivot" type="SpringArm3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-spring_length = 10.0
+spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="Pivot"]
 transform = Transform3D(1, -1.49012e-08, -2.98023e-08, 1.49012e-08, 1, -5.96046e-08, 2.98023e-08, 5.96046e-08, 1, 0, 1, 10)
